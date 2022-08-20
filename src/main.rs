@@ -1,5 +1,6 @@
 use clap::Parser;
 
+mod download;
 mod parse;
 
 #[derive(Parser)]
@@ -31,6 +32,7 @@ struct Cli {
 async fn main() {
     let cli = Cli::parse();
 
+    // Retrieve user's posts
     let posts = parse::get_posts(
         cli.scheme.to_lowercase(),
         cli.username.to_lowercase(),
@@ -38,5 +40,12 @@ async fn main() {
     )
     .await;
 
-    println!("{:#?}", posts);
+    // Defines the output folder name
+    let directory = match cli.directory {
+        Some(loc) => loc,
+        None => cli.username,
+    };
+
+    // Download the posts
+    download::download_posts(posts, directory).await;
 }
