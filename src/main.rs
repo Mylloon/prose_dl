@@ -27,14 +27,16 @@ struct Cli {
     scheme: String,
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let cli = Cli::parse();
 
     let posts = parse::get_posts(
         cli.scheme.to_lowercase(),
         cli.username.to_lowercase(),
         cli.domain.to_lowercase(),
-    );
+    )
+    .await;
 
     println!("{:#?}", posts);
 }
