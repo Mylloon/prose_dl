@@ -1,16 +1,12 @@
 use scraper::{Html, Selector};
 
 /// Return vector of all the posts of the user
-pub async fn get_posts(scheme: String, username: String, domain: String) -> Vec<String> {
+pub async fn get_posts(scheme: String, username: String, domain: String) -> (String, Vec<String>) {
+    // Defines the address
+    let url = format!("{}://{}.{}", scheme, username, domain);
+
     // Parse index page: sheme://username.domain
-    let document = Html::parse_document(
-        &reqwest::get(format!("{}://{}.{}", scheme, username, domain))
-            .await
-            .unwrap()
-            .text()
-            .await
-            .unwrap(),
-    );
+    let document = Html::parse_document(&reqwest::get(&url).await.unwrap().text().await.unwrap());
 
     // Look at the posts
     let raw_posts = document
@@ -25,5 +21,5 @@ pub async fn get_posts(scheme: String, username: String, domain: String) -> Vec<
     }
 
     // Return the vector
-    posts
+    (url, posts)
 }
