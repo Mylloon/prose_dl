@@ -26,6 +26,10 @@ struct Cli {
     /// Scheme: HTTP/HTTPS
     #[clap(long, value_parser, default_value = "https")]
     scheme: String,
+
+    /// Download special files
+    #[clap(short, takes_value = false)]
+    special_files: bool,
 }
 
 #[tokio::main]
@@ -47,5 +51,5 @@ async fn main() {
     };
 
     // Download the posts
-    download::download_posts(posts, directory).await;
+    download::download_posts(posts, directory, cli.special_files).await;
 }

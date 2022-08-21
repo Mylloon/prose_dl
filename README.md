@@ -20,4 +20,9 @@ folder named after your username:
 $ prose_dl <username>
 ```
 
+Will download the special files too:
+```bash
+$ prose_dl -s <username>
+```
+
 More info with the `--help` option.
