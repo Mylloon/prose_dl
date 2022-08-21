@@ -26,3 +26,13 @@ $ prose_dl -s <username>
 ```
 
 More info with the `--help` option.
+
+## FAQ
+> Can this download unlisted posts (thoses with *date metadata* set in the future)?
+- No.
+
+> Can this download specials files?
+- Yes, with `-s` option
+
+> Can I use a custom domain?
+- Yes, with `--domain` option
