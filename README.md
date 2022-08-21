@@ -1,6 +1,8 @@
 # prose_dl
 Helper to download all posts from prose.sh instance
 
+[![dependency status](https://deps.rs/repo/gitea/git.kennel.ml/Anri/prose_dl/status.svg)](https://deps.rs/repo/gitea/git.kennel.ml/Anri/prose_dl)
+
 ## Installation
 Clone the repo and get in
 ```bash
