@@ -37,6 +37,7 @@ async fn main() {
     let cli = Cli::parse();
 
     // Retrieve user's posts
+    println!("Retrieving posts...");
     let posts = parse::get_posts(
         cli.scheme.to_lowercase(),
         cli.username.to_lowercase(),
@@ -51,5 +52,7 @@ async fn main() {
     };
 
     // Download the posts
-    download::download_posts(posts, directory, cli.special_files).await;
+    println!("Downloads posts...");
+    download::download_posts(posts, &directory, cli.special_files).await;
+    println!("Download completed in {}/ folder.", directory);
 }

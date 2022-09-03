@@ -1,7 +1,7 @@
 /// Download all the posts
 pub async fn download_posts(
     posts: (String, Vec<String>),
-    dir: String,
+    dir: &String,
     download_special_files: bool,
 ) {
     // Create folder, silently ignore if already exists
@@ -9,7 +9,7 @@ pub async fn download_posts(
 
     // Download all the posts
     for post in posts.1 {
-        download(&posts.0, &dir, post, "md").await;
+        download(&posts.0, dir, post, "md").await;
     }
 
     // Check if specials files need to be downloaded
@@ -20,7 +20,7 @@ pub async fn download_posts(
         ];
 
         for file in special_files {
-            download(&posts.0, &dir, file.0, file.1).await;
+            download(&posts.0, dir, file.0, file.1).await;
         }
     }
 }
