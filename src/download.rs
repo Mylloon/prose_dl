@@ -1,15 +1,17 @@
 /// Download all the posts
-pub async fn download_posts(
-    posts: (String, Vec<String>),
-    dir: &String,
-    download_special_files: bool,
-) {
+pub async fn download_posts(posts: (String, Vec<String>), dir: &str, download_special_files: bool) {
     // Create folder, silently ignore if already exists
     std::fs::create_dir(&dir).unwrap_or_default();
 
+    // Define client with custom user-agent
+    let client = reqwest::Client::builder()
+        .user_agent(format!("prose_dl/{}", env!("CARGO_PKG_VERSION")))
+        .build()
+        .unwrap();
+
     // Download all the posts
     for post in posts.1 {
-        download(&posts.0, dir, post, "md").await;
+        download(&posts.0, dir, post, "md", &client).await;
     }
 
     // Check if specials files need to be downloaded
@@ -20,17 +22,25 @@ pub async fn download_posts(
         ];
 
         for file in special_files {
-            download(&posts.0, dir, file.0, file.1).await;
+            download(&posts.0, dir, file.0, file.1, &client).await;
         }
     }
 }
 
 /// Download a file from the raw endpoint
-async fn download(url: &String, output_dir: &String, post_name: String, extension: &str) {
+async fn download(
+    url: &String,
+    output_dir: &str,
+    post_name: String,
+    extension: &str,
+    client: &reqwest::Client,
+) {
     // Endpoint name
     let endpoint = "raw";
 
-    let data = reqwest::get(format!("{}/{}/{}", url, endpoint, post_name))
+    let data = client
+        .get(format!("{}/{}/{}", url, endpoint, post_name))
+        .send()
         .await
         .unwrap()
         .text()
