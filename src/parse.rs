@@ -17,7 +17,15 @@ pub async fn get_posts(scheme: String, username: String, domain: String) -> (Str
     // Get the name of them and push them into the vector
     let mut posts = Vec::new();
     for link in raw_posts.select(&Selector::parse("a").unwrap()) {
-        posts.push(link.inner_html());
+        posts.push(
+            link.value()
+                .attr("href")
+                .unwrap()
+                .split('/')
+                .last()
+                .unwrap()
+                .to_owned(),
+        );
     }
 
     // Return the vector
