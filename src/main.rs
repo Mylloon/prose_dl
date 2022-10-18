@@ -4,18 +4,18 @@ mod download;
 mod parse;
 
 #[derive(Parser)]
-#[clap(version, about, long_about = None)]
+#[command(version, about, long_about = None)]
 struct Cli {
     /// Your username
-    #[clap(value_parser)]
+    #[arg(value_parser)]
     username: String,
 
     /// Directory output [default: the username]
-    #[clap(short, long, value_parser, value_name = "DIRECTORY")]
+    #[arg(short, long, value_parser, value_name = "DIRECTORY")]
     directory: Option<String>,
 
     /// Domain name
-    #[clap(
+    #[arg(
         long,
         value_parser,
         value_name = "DOMAIN NAME",
@@ -24,11 +24,11 @@ struct Cli {
     domain: String,
 
     /// Scheme: HTTP/HTTPS
-    #[clap(long, value_parser, default_value = "https")]
+    #[arg(long, value_parser, default_value = "https")]
     scheme: String,
 
     /// Download special files
-    #[clap(short, takes_value = false)]
+    #[arg(short, action = clap::ArgAction::SetTrue)]
     special_files: bool,
 }
 
