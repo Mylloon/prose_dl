@@ -18,6 +18,7 @@ pub async fn download_posts(posts: (String, Vec<String>), dir: &str, download_sp
     if download_special_files {
         let special_files = [
             (String::from("_readme"), "md"),
+            (String::from("_footer"), "md"),
             (String::from("_styles"), "css"),
         ];
 
