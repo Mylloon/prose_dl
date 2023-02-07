@@ -1,7 +1,7 @@
 /// Download all the posts
 pub async fn download_posts(posts: (String, Vec<String>), dir: &str, download_special_files: bool) {
     // Create folder, silently ignore if already exists
-    std::fs::create_dir(&dir).unwrap_or_default();
+    std::fs::create_dir(dir).unwrap_or_default();
 
     // Define client with custom user-agent
     let client = reqwest::Client::builder()
