@@ -1,4 +1,4 @@
-# prose_dl
+# prose_dl -- **See #3**
 
 Helper to download all posts from prose.sh instance
 
